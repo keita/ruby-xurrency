@@ -1,0 +1,11 @@
+--- 
+:summary: ruby-xurrency is a wrapper library for API xurrency(http://xurrency.com/api).
+:email: keita.yamaguchi@gmail.com
+:has_rdoc: true
+:name: xurrency
+:homepage: http://rubyforge.org/projects/xurrency/
+:version: "001"
+:dependencies: 
+- soap4r
+:rubyforge_project: xurrency
+:author: Keita Yamaguchi
