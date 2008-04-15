@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require "rubygems"
+require "xurrency"
+require "optparse"
+
+Option = OptionParser.new do |opt|
+  opt.banner = "Usage: xurrency [options] amount base target"
+
+  opt.on("-l", "--list", "Show currencies supported") do
+    puts Xurrency.new.currencies.sort.join(", ")
+    exit
+  end
+
+  opt.on("-h", "--help", "Show this message") do
+    puts opt.help
+    exit
+  end
+
+  opt.on("-v", "--version", "Show the version of ruby-xurrency") do
+    puts "ruby-xurrency " + Xurrency::VERSION
+    exit
+  end
+
+  opt.parse!(ARGV)
+end
+
+begin
+  xu = Xurrency.new
+  puts xu.value(ARGV[0].to_i, ARGV[1], ARGV[2])
+  puts "(1 #{ARGV[1]} = #{xu.values(ARGV[1])[ARGV[2]]} #{ARGV[2]})"
+rescue ArgumentError
+  puts Option.help
+end
