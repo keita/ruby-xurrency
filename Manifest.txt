@@ -1,0 +1,9 @@
+.gemified
+History.txt
+License.txt
+README.txt
+Rakefile
+lib/xurrency.rb
+bin/xurrency
+spec/request_spec.rb
+spec/xurrency_spec.rb
