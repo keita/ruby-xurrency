@@ -19,18 +19,31 @@ describe "Xurrency" do
     res.__id__.should.not == $xu.update_zone("jpy").__id__
   end
 
+  it "should know weather cached or not" do
+    $xu.zone_cached?("cny").should.be.false
+    $xu.zone("cny")
+    $xu.zone_cached?("cny").should.be.true
+  end
+
+  it "should clear cache" do
+    $xu.zone("usd")
+    $xu.zone_cached?("usd").should.be.true
+    $xu.clear_zone("usd")
+    $xu.zone_cached?("usd").should.be.false
+  end
+
   it "should respond methods" do
-    ["currency_name",
-     "zone",
-     "url",
-     "currencies",
-     "values",
-     "values_inverse",
-     "update_currency_name",
-     "update_zone",
-     "update_url",
-     "update_currencies",
-     "update_values",
-     "update_values_inverse"].each {|name| $xu.methods.should.include? name }
+    methods = []
+    list = [ "currency_name",
+             "zone",
+             "url",
+             "currencies",
+             "values",
+             "values_inverse" ]
+    methods += list
+    methods += list.map {|name| "update_#{name}" }
+    methods += list.map {|name| "clear_#{name}" }
+    methods += list.map {|name| "#{name}_cached?" }
+    methods.each {|name| $xu.methods.should.include? name }
   end
 end

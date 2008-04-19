@@ -107,8 +107,14 @@ class Xurrency
       return @cache[name][args]
     end
     klass.__send__(:define_method, "update_#{name}") do |*args|
-      @cache[name][args] = nil
+      @cache[name].delete(args)
       __send__(name, *args)
+    end
+    klass.__send__(:define_method, "#{name}_cached?") do |*args|
+      @cache[name].has_key?(args)
+    end
+    klass.__send__(:define_method, "clear_#{name}") do |*args|
+      @cache[name].delete(args)
     end
   end
 end
