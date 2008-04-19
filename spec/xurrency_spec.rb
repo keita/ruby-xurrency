@@ -16,6 +16,21 @@ describe "Xurrency" do
     res = $xu.zone("jpy")
     res.should == "Japan"
     res.__id__.should == $xu.zone("jpy").__id__
-    res.__id__.should.not == $xu.update(:zone, "jpy").__id__
+    res.__id__.should.not == $xu.update_zone("jpy").__id__
+  end
+
+  it "should respond methods" do
+    ["currency_name",
+     "zone",
+     "url",
+     "currencies",
+     "values",
+     "values_inverse",
+     "update_currency_name",
+     "update_zone",
+     "update_url",
+     "update_currencies",
+     "update_values",
+     "update_values_inverse"].each {|name| $xu.methods.should.include? name }
   end
 end

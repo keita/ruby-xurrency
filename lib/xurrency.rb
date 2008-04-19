@@ -89,13 +89,6 @@ class Xurrency
     end
   end
 
-  # Updates the result value.
-  def update(name, *args)
-    raise ArgumentError, name unless @cache.has_key?(name)
-    @cache[name][args] = nil
-    __send__(name, *args)
-  end
-
   # Calculates the value without quering getValue.
   def value(amount, base, target)
     values(base)[target] * amount
@@ -106,11 +99,16 @@ class Xurrency
   # Memoize some queries.
   def memoize(name)
     @cache[name] = {}
-    (class << self; self; end).__send__(:define_method, name) do |*args|
+    klass = (class << self; self; end)
+    klass.__send__(:define_method, name) do |*args|
       return @cache[name][args] if @cache[name].has_key?(args)
       @cache[name][args] = Request.send(name, *args)
       @cache[name][args][:timestamp] = Time.now if name.to_s =~ /values/
       return @cache[name][args]
+    end
+    klass.__send__(:define_method, "update_#{name}") do |*args|
+      @cache[name][args] = nil
+      __send__(name, *args)
     end
   end
 end
