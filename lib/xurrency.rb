@@ -5,7 +5,7 @@ require "singleton"
 require "delegate"
 
 class Xurrency
-  VERSION = "001"
+  VERSION = "002"
 
   # Soap client.
   class Client < Delegator #:nodoc:
