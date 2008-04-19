@@ -1,4 +1,10 @@
+= 002: 2008-04-20
+
+* Keita Yamaguchi:
+  * new methods: Xurrency#update_*, #clear_*, and #*_cached?
+  * deleted: Xurrency#update
+
 = 001: 2008-04-15
 
-* Keita Yamaguchi
+* Keita Yamaguchi:
   * Initial release
